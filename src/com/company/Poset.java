@@ -44,8 +44,11 @@ class Poset {
      * O(|P|)
      */
     void listMin() {
-        int min = 0;
-        //todo
+        for (Map.Entry<Integer, Pair<HashMap<Integer, Integer>, HashMap<Integer, Integer>>> entry : map.entrySet()) { // o (P)
+            HashMap<Integer, Integer> root = entry.getValue().getKey(); // o (1)
+            if (!map.containsValue(root))
+                System.out.println(root.get(0));
+        }
     }
 
     /**
@@ -69,8 +72,11 @@ class Poset {
                     HashMap<Integer, Integer> hashRoot = new HashMap<>();
                     int counter = 0;
                     for (String rootValue : root.split(",")) { // o (P)
-                        Integer parsedRootValue = Integer.parseInt(rootValue);
-                        hashRoot.put(counter, parsedRootValue);
+                        if(!rootValue.equals("null")) {
+                            Integer parsedRootValue = Integer.parseInt(rootValue);
+                            hashRoot.put(counter, parsedRootValue);
+                        }else
+                            hashRoot.put(counter, null);
                         counter++;
                     }
                     String children = edges[1];
